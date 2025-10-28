@@ -33,13 +33,10 @@ function App() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900 text-gray-100">
       <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-lg shadow-2xl">
-        <h2 className="text-3xl font-bold text-center text-indigo-400">
-          Secure Login
+        <h2 className="text-3xl font-bold text-center text-white">
+          Netlab Login
         </h2>
-
-        {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Username Field */}
           <div>
             <label
               htmlFor="username"
@@ -59,7 +56,6 @@ function App() {
             />
           </div>
 
-          {/* Password Field */}
           <div>
             <label
               htmlFor="password"
@@ -79,19 +75,17 @@ function App() {
             />
           </div>
 
-          {/* Submit Button */}
           <div>
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition duration-300 disabled:bg-gray-500"
+              className="w-full px-4 py-2 font-bold text-white bg-black rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition duration-300 disabled:bg-gray-500"
             >
               {isLoading ? 'Logging in...' : 'Login'}
             </button>
           </div>
         </form>
 
-        {/* Message Area */}
         {message.text && (
           <div className="mt-6 text-center">
             <p className={`text-sm ${message.type === 'error' ? 'text-red-400' : 'text-green-400'

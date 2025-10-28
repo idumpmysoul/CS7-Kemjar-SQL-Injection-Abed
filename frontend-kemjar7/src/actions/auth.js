@@ -8,9 +8,8 @@ export async function loginUser(username, password) {
       username,
       password,
     });
-    return response.data; // return the actual response data
+    return response.data;
   } catch (error) {
-    // throw a clean error message to the component
     if (error.response?.data?.error) {
       throw new Error(error.response.data.error);
     }
