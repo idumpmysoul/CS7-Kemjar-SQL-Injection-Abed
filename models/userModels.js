@@ -49,6 +49,9 @@ exports.findVulnerable = async (username, password) => {
   `;  
   try {
     const result = await pool.query(query);
+    if (result.rows.length === 0) {
+      return null;
+    }
     return result.rows;
   } catch (err) {
     console.error("Query execution failed:", err.message);
