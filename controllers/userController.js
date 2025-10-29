@@ -56,3 +56,15 @@ exports.loginVulnerable = async (req, res) => {
     res.status(500).json({ error: "Login failed" });
   }
 };
+
+exports.getPasswordByCredentials = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const result = await User.findPasswordByCredentials(username, password);
+    if (!result) return res.status(404).json({ error: "User not found" });
+    res.json({ response: result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch password" });
+  }
+};
