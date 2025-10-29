@@ -24,6 +24,9 @@ function HomePage() {
     const handlePassCheck = () => {
         navigate("/check-password");
     }
+    const handleValidateFlag = () => {
+        navigate("/validate-flag");
+    }
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-black-10 text-gray-100">
@@ -32,6 +35,12 @@ function HomePage() {
             </h1>
             <p className="mb-8 text-gray-400">You have successfully logged in.</p>
             <div className="flex flex-row">
+                <button
+                    onClick={handleValidateFlag}
+                    className="px-6 py-2 mx-3 bg-white text-black rounded-md hover:bg-black-30 hover:text-white transition-all duration-200"
+                >
+                    Validate your flag!
+                </button>
                 <button
                     onClick={handleLogout}
                     className="px-6 py-2 mx-3 bg-white text-black rounded-md hover:bg-black-30 hover:text-white transition-all duration-200"

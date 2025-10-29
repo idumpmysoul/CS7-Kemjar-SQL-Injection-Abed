@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import HomePage from "./HomePage";
 import CheckPasswordPage from "./CheckPassword";
+import ValidatePage from "./ValidatePage";
 import { Navigate } from "react-router-dom";
 
 function ProtectedRoute({ children }) {
@@ -46,6 +47,14 @@ function App() {
           element={
             <ProtectedRoute>
               <CheckPasswordPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/validate-flag"
+          element={
+            <ProtectedRoute>
+              <ValidatePage />
             </ProtectedRoute>
           }
         />
