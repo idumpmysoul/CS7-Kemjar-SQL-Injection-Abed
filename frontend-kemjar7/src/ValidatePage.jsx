@@ -79,10 +79,10 @@ function ValidatePage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <p>
-                Hello {userName}! your user id is <strong>{userId}</strong>
+              Hello {userName}! your user id is <strong>{userId}</strong>
             </p>
             <p className="mb-5">
-                Please Submit your flag!
+              Please Submit your flag!
             </p>
             <label htmlFor="flag" className="block mb-2 text-sm font-medium text-gray-300">
               Flag
@@ -103,9 +103,35 @@ function ValidatePage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-2 font-bold text-white bg-black rounded-md hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 disabled:bg-gray-500"
+              className="w-full px-4 py-2 font-bold text-white bg-black rounded-md hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-black-25 transition duration-300 disabled:bg-white disabled:text-black flex items-center justify-center gap-2"
             >
-              {isLoading ? "Validating..." : "Check Flag"}
+              {isLoading ? (
+                <>
+                  <svg
+                    className="w-5 h-5 animate-spin text-black"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                  <span>Checking Flag..</span>
+                </>
+              ) : (
+                "Login"
+              )}
             </button>
 
             <button
@@ -120,9 +146,8 @@ function ValidatePage() {
         {message.text && (
           <div className="mt-6 text-center">
             <p
-              className={`text-sm whitespace-pre-line ${
-                message.type === "error" ? "text-red-400" : "text-green-400"
-              }`}
+              className={`text-sm whitespace-pre-line ${message.type === "error" ? "text-red-400" : "text-green-400"
+                }`}
             >
               {message.text}
             </p>
