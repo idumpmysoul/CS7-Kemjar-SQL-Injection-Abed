@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     allowedHosts: [
-      'cs7.netlabdte.com', // ⬅️ tambahkan ini
+      'cs7.netlabdte.com',
       'localhost'
     ],
     host: '0.0.0.0', 
