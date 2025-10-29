@@ -5,6 +5,7 @@ import HomePage from "./HomePage";
 import CheckPasswordPage from "./CheckPassword";
 import ValidatePage from "./ValidatePage";
 import { Navigate } from "react-router-dom";
+import NotFoundPage from "./NotFoundPage";
 
 function ProtectedRoute({ children }) {
   const userData = localStorage.getItem("userData");
@@ -26,6 +27,10 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route
+          path="*"
+          element={<NotFoundPage />}
+        />
         <Route
           path="/"
           element={
