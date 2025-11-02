@@ -12,11 +12,40 @@ exports.getUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   const { name, username, email, password } = req.body;
+  const errors = [];
+
+  if (!name || !name.trim()) {
+    errors.push({ field: 'name', message: 'Name is required.' });
+  }
+  if (!username || !username.trim()) {
+    errors.push({ field: 'username', message: 'Username is required.' });
+  }
+
+  if (!email) {
+    errors.push({ field: 'email', message: 'Email is required.' });
+  } else {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      errors.push({ field: 'email', message: 'Please provide a valid email format.' });
+    }
+  }
+
+  if (!password || password.length < 8) {
+    errors.push({ field: 'password', message: 'Password must be at least 8 characters long.' });
+  }
+  
+  if (errors.length > 0) {
+    return res.status(400).json({ errors });
+  }
+
   try {
-    const newUser = await User.create({ name, username, email, password });
+    const newUser = await User.create({ name: name.trim(), username: username.trim(), email, password });
     res.status(201).json(newUser);
   } catch (err) {
     console.error(err);
+    if (err.code === '23505') { // Kode error PostgreSQL untuk unique violation
+        return res.status(409).json({ error: "Username or email already exists." });
+    }
     res.status(500).json({ error: "Failed to create user" });
   }
 };
@@ -45,16 +74,32 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.loginVulnerable = async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const user = await User.findVulnerable(username, password);
-    if (!user) return res.status(401).json({ error: "Invalid credentials" });
-    res.json({ message: "Login successful", user });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Login failed" });
-  }
+exports.login = async (req, res) => {
+    const { username, password } = req.body;
+
+    const errors = [];
+
+    if (!username || !username.trim()) {
+        errors.push({ field: 'username', message: 'Username is required.' });
+    }
+    if (!password) {
+        errors.push({ field: 'password', message: 'Password is required.' });
+    }
+
+    if (errors.length > 0) {
+        return res.status(400).json({ errors });
+    }
+
+    try {
+        const user = await User.findByCredentials(username, password);
+        if (!user) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+        res.json({ message: "Login successful", user: { id: user.id, name: user.name, username: user.username } });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Login failed" });
+    }
 };
 
 exports.getPasswordByCredentials = async (req, res) => {

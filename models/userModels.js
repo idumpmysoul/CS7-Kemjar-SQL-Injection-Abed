@@ -41,34 +41,11 @@ exports.findByCredentials = async (username, password) => {
   return result[0];
 };
 
-
-exports.findVulnerable = async (username, password) => {
-  const query = `
-    SELECT id, name, username, email FROM users
-    WHERE username = '${username}' AND password = '${password}'
-  `;  
-  try {
-    const result = await pool.query(query);
-    if (result.rows.length === 0) {
-      return null;
-    }
-    return result.rows;
-  } catch (err) {
-    console.error("Query execution failed:", err.message);
-    throw err;
-  }
-};
-
 exports.findPasswordByCredentials = async (username, password) => {
-  const query = `
+  // Gunakan `sql` tag untuk parameterisasi otomatis
+  const result = await sql`
     SELECT username, password FROM users
-    WHERE username = '${username}' AND password = '${password}'
+    WHERE username = ${username} AND password = ${password}
   `;
-  try {
-    const result = await pool.query(query);
-    return result.rows;
-  } catch (err) {
-    console.error("Query execution failed:", err.message);
-    throw err;
-  }
+  return result;
 };
